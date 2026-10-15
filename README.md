@@ -1,6 +1,6 @@
 # Arthur Costa · Portfólio profissional
 
-Portfólio de **Arthur de Carvalho Costa**, estudante de **Engenharia de Software**, com foco em **Python, Java e JavaScript**. Desenvolvido a partir dos requisitos do Laboratório 01 de DIAW, com uma identidade visual inspirada em uma bancada de desenvolvimento.
+Portfólio de **Arthur de Carvalho Costa**, estudante de **Engenharia de Software**, com foco em **Python, Java e JavaScript**. Desenvolvido a partir dos requisitos do Laboratório 01 de DIAW. A apresentação prioriza nome, foto, trajetória e projetos, com navegação lateral e leitura contínua.
 
 ## Links úteis
 
@@ -21,7 +21,7 @@ Apresenta formação, interesses, projetos em ordem cronológica, trajetória ac
 ## Funcionalidades
 
 - Português e inglês com preferência preservada no navegador.
-- Editor demonstrativo com abas Python, Java e JavaScript e saída animada. É uma demonstração visual; não executa código arbitrário.
+- Caderno de código expansível na seção Sobre mim, com abas Python, Java e JavaScript e saída animada. É uma demonstração visual; não executa código arbitrário.
 - Projetos ordenados do mais antigo ao mais recente, com filtros de linguagem e links reais.
 - Trajetória acadêmica e projetos pessoais.
 - Perfil e estatísticas públicas do GitHub pela API oficial, com tratamento de falha e limite de requisições.
@@ -34,7 +34,7 @@ Apresenta formação, interesses, projetos em ordem cronológica, trajetória ac
 | Camada | Tecnologia |
 | --- | --- |
 | Interface | HTML semântico, CSS responsivo, JavaScript ES Modules |
-| Fontes | DM Sans, Space Grotesk e IBM Plex Mono, via Google Fonts |
+| Fontes | Instrument Sans, Caveat e IBM Plex Mono, via Google Fonts |
 | APIs públicas | GitHub REST API e WakaTime API |
 | Envio de e-mail | FormSubmit, backend externo |
 | Preview local | Node.js 22+ com módulos nativos `http`, `fs`, `path`, `url` |
@@ -143,7 +143,7 @@ Verificação de sintaxe: `npm run check`.
 
 Os testes de interface em `scripts/verify.cjs` usam Playwright como ferramenta de desenvolvimento externa. Para executá-los, disponibilize o pacote e o Chromium no ambiente e rode o script enquanto o servidor local estiver ativo. O pacote não é necessário para executar ou hospedar o portfólio.
 
-Cobertura: alternância de idioma, abas do editor por clique e teclado, exemplo de execução, filtros, navegação móvel, ausência de rolagem horizontal, imagens, validação de formulário e respostas simuladas do serviço de contato. Entrega real de e-mail e dados WakaTime permanecem dependentes de configuração externa.
+Cobertura: alternância de idioma, caderno expansível, abas do editor por clique e teclado, exemplo de execução, filtros, navegação móvel, ausência de rolagem horizontal em sete larguras (320 a 1440 px), imagens, validação de formulário e respostas simuladas do serviço de contato. Entrega real de e-mail e dados WakaTime permanecem dependentes de configuração externa.
 
 ## Pendências para a entrega acadêmica completa
 

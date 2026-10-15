@@ -21,12 +21,15 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? require(process.env.PLAYWRI
   await page.goto('http://localhost:4173');
   await page.evaluate(() => document.fonts.ready);
   assert.equal(await page.locator('.project-card').count(), 3);
+  assert.match(await page.locator('h1').innerText(), /Arthur/);
+  assert.equal(await page.locator('#hero-code').isVisible(), false);
+  await page.locator('.code-notebook summary').click();
   await page.getByRole('tab', { name: 'J Hello.java', exact: true }).click();
   await page.waitForFunction(() => document.querySelector('#hero-code').textContent.includes('public class'));
   await page.getByRole('tab', { name: 'J Hello.java', exact: true }).press('ArrowRight');
   assert.equal(await page.locator('#tab-javascript').getAttribute('aria-selected'), 'true');
   await page.locator('#run-code').click();
-  await page.waitForFunction(() => document.querySelector('#code-output').textContent.includes('Vamos construir'));
+  await page.waitForFunction(() => document.querySelector('#code-output').textContent.includes('Arthur Costa'));
   await page.locator('[data-filter="java"]').click();
   assert.equal(await page.locator('.project-card').count(), 1);
   assert.match(await page.locator('.project-title-row').innerText(), /FinanceTarget/);
@@ -35,7 +38,7 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? require(process.env.PLAYWRI
   await page.locator('[data-filter="all"]').click();
   await page.locator('#language-toggle').click();
   assert.equal(await page.locator('html').getAttribute('lang'), 'en');
-  assert.match(await page.locator('h1').innerText(), /Ideas in mind/);
+  assert.match(await page.locator('.hero-role').innerText(), /aspiring software developer/);
   assert.match(await page.locator('#name').getAttribute('placeholder'), /call you/);
   await page.reload();
   assert.equal(await page.locator('html').getAttribute('lang'), 'en');
@@ -61,17 +64,24 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? require(process.env.PLAYWRI
   assert.equal(contactRequests, 3);
   await page.locator('#contact-form').evaluate(form => form.reset());
   await page.reload();
-  await page.locator('#tab-python').click();
+  assert.equal(await page.locator('.code-notebook').getAttribute('open'), null);
   await page.evaluate(() => document.fonts.ready);
   await page.locator('#github-stats .github-stat-numbers, #github-stats .muted').first().waitFor();
   await page.waitForFunction(() => [...document.images].filter(i => i.src.includes('/assets/')).every(i => i.complete && i.naturalWidth > 0));
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.evaluate(() => { document.activeElement.blur(); scrollTo({ top: 0, behavior: 'instant' }); });
+  await page.waitForFunction(() => document.querySelector('.nav a[href="#inicio"]').classList.contains('active'));
   fs.mkdirSync('docs/screenshots', { recursive: true });
   await page.screenshot({ path: 'docs/screenshots/desktop.png', fullPage: true });
   await page.screenshot({ path: 'tmp/hero-desktop.png' });
-  for (const width of [375, 390, 768, 1024, 1440]) {
+  for (const width of [320, 375, 390, 768, 950, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     const size = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, inner: innerWidth }));
     assert(size.scroll <= size.inner, `Horizontal overflow at ${width}: ${JSON.stringify(size)}`);
+    await page.locator('.code-notebook').evaluate(details => details.open = true);
+    const expanded = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, inner: innerWidth }));
+    assert(expanded.scroll <= expanded.inner, `Expanded editor overflows at ${width}`);
+    await page.locator('.code-notebook').evaluate(details => details.open = false);
   }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.locator('.menu-toggle').click();
@@ -82,10 +92,10 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? require(process.env.PLAYWRI
   await page.keyboard.press('Escape');
   assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false');
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.evaluate(() => scrollTo(0, 0));
+  await page.evaluate(() => { document.activeElement.blur(); scrollTo({ top: 0, behavior: 'instant' }); });
   await page.screenshot({ path: 'docs/screenshots/mobile.png', fullPage: true });
   await page.screenshot({ path: 'tmp/hero-mobile.png' });
   assert.deepEqual(errors, []);
   await browser.close();
-  console.log('PASS: editor, keyboard, projects, translations, persistence, contact success/error/activation, images, 5 viewport widths, mobile navigation and reduced motion. Contact requests intercepted; no email sent.');
+  console.log('PASS: collapsible editor, keyboard, projects, translations, persistence, contact success/error/activation, images, 7 viewport widths, mobile navigation and reduced motion. Contact requests intercepted; no email sent.');
 })().catch(error => { console.error(error); process.exit(1); });
