@@ -6,6 +6,14 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? require(process.env.PLAYWRI
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'no-preference' });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
+  async function changeMotionPreference(value) {
+    await page.emulateMedia({ reducedMotion: value });
+    // This Chromium runtime delivers emulated media change events after a viewport invalidation.
+    const viewport = page.viewportSize();
+    await page.setViewportSize({ ...viewport, width: viewport.width + 1 });
+    await page.setViewportSize(viewport);
+    await page.waitForTimeout(180); // Let the debounced canvas resize finish before sampling pixels.
+  }
   await page.goto('http://localhost:4173');
   await page.waitForFunction(() => document.documentElement.dataset.motion === 'on');
   await page.evaluate(() => document.fonts.ready);
@@ -54,14 +62,14 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? require(process.env.PLAYWRI
   const progress = await page.locator('#reading-progress-fill').evaluate(el => getComputedStyle(el).transform);
   assert.notEqual(progress, 'matrix(0, 0, 0, 1, 0, 0)');
 
-  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await changeMotionPreference('reduce');
   await page.waitForFunction(() => document.documentElement.dataset.motion === 'off');
   const still = await field();
   await page.waitForTimeout(220);
   assert.equal((await field()).hash, still.hash, 'Particles must stop with reduced motion');
   const hidden = await page.locator('[data-reveal]').evaluateAll(elements => elements.filter(el => getComputedStyle(el).opacity !== '1').length);
   assert.equal(hidden, 0, 'All content must be visible with reduced motion');
-  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await changeMotionPreference('no-preference');
   await page.waitForFunction(() => document.documentElement.dataset.motion === 'on');
   await page.waitForTimeout(220);
   assert.notEqual((await field()).hash, still.hash, 'Animation resumes when preference changes');

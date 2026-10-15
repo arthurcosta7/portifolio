@@ -19,6 +19,7 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? require(process.env.PLAYWRI
     await route.fulfill({ status: contactMode === 'error' ? 503 : 200, contentType: 'application/json', body: JSON.stringify(reply) });
   });
   await page.goto('http://localhost:4173');
+  await page.locator('h1').waitFor();
   await page.evaluate(() => document.fonts.ready);
   assert.equal(await page.locator('.project-card').count(), 3);
   assert.match(await page.locator('h1').innerText(), /Arthur/);
@@ -33,6 +34,10 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? require(process.env.PLAYWRI
   await page.locator('[data-filter="java"]').click();
   assert.equal(await page.locator('.project-card').count(), 1);
   assert.match(await page.locator('.project-title-row').innerText(), /FinanceTarget/);
+  await page.locator('#language-toggle').click();
+  assert.equal(await page.locator('.project-card').count(), 1);
+  assert.equal(await page.locator('[data-filter="java"]').getAttribute('aria-pressed'), 'true');
+  await page.locator('#language-toggle').click();
   await page.locator('[data-filter="javascript"]').click();
   assert.equal(await page.locator('.project-card').count(), 3);
   await page.locator('[data-filter="all"]').click();
@@ -50,6 +55,10 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? require(process.env.PLAYWRI
     await page.locator('#message').fill('Mensagem de teste interceptada localmente.');
   };
   await fill();
+  await page.locator('#language-toggle').click();
+  assert.equal(await page.locator('#name').inputValue(), 'Portfolio Test');
+  assert.equal(await page.locator('#message').inputValue(), 'Mensagem de teste interceptada localmente.');
+  await page.locator('#language-toggle').click();
   await page.locator('.submit-button').click();
   await page.waitForFunction(() => document.querySelector('#form-status').textContent.includes('aceita'));
   assert.equal(await page.locator('#name').inputValue(), '');

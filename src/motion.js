@@ -1,9 +1,11 @@
+export function startMotion(canvas, progress, portrait) {
+const lifecycle = new AbortController();
+function on(target, type, listener, options = {}) {
+  target.addEventListener(type, listener, { ...options, signal: lifecycle.signal });
+}
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
-const canvas = document.querySelector('#particle-field');
 const context = canvas.getContext('2d', { alpha: true });
-const progress = document.querySelector('#reading-progress-fill');
-const portrait = document.querySelector('.photo-mount');
 const pointer = { x: -1000, y: -1000, active: false };
 let width = 0;
 let height = 0;
@@ -22,37 +24,12 @@ function updateScroll() {
   portrait.style.setProperty('--portrait-shift', `${shift.toFixed(2)}px`);
 }
 function scheduleScroll() {
+  if (lifecycle.signal.aborted) return;
   if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScroll);
 }
-addEventListener('scroll', scheduleScroll, { passive: true });
-new ResizeObserver(scheduleScroll).observe(document.querySelector('main'));
-
-const revealObserver = new IntersectionObserver(entries => {
-  for (const entry of entries) {
-    if (!entry.isIntersecting) continue;
-    entry.target.classList.add('is-revealed');
-    revealObserver.unobserve(entry.target);
-  }
-}, { threshold: .08, rootMargin: '0px 0px -35px 0px' });
-
-function prepareReveals() {
-  const selectors = '.section-heading, .project-card, .about-layout, .code-notebook, .experience-intro, .experience-list article, .activity-grid, .contact-copy, .contact-form';
-  document.querySelectorAll(selectors).forEach(element => {
-    if (element.hasAttribute('data-reveal')) return;
-    element.setAttribute('data-reveal', '');
-    if (element.matches('.experience-list article')) element.style.setProperty('--reveal-delay', '100ms');
-    if (element.matches('.contact-form')) element.style.setProperty('--reveal-delay', '120ms');
-    if (reducedMotion.matches || element.getBoundingClientRect().bottom < 0) element.classList.add('is-revealed');
-    else revealObserver.observe(element);
-  });
-  scheduleScroll();
-}
-document.addEventListener('portfolio:projects-rendered', prepareReveals);
-document.addEventListener('focusin', event => {
-  // Keyboard navigation must never land on visually hidden content.
-  const element = event.target.closest('[data-reveal]');
-  if (element) { element.classList.add('is-revealed'); revealObserver.unobserve(element); }
-});
+on(window, 'scroll', scheduleScroll, { passive: true });
+const resizeObserver = new ResizeObserver(scheduleScroll);
+resizeObserver.observe(document.querySelector('main'));
 
 function createField() {
   width = innerWidth;
@@ -152,28 +129,40 @@ function applyMotionPreference() {
   document.documentElement.dataset.motion = reducedMotion.matches ? 'off' : 'on';
   stopField();
   if (reducedMotion.matches) {
-    document.querySelectorAll('[data-reveal]').forEach(element => element.classList.add('is-revealed'));
-    pointer.active = false;
+      pointer.active = false;
     if (context) drawField(0);
   } else resumeField();
   scheduleScroll();
 }
-addEventListener('pointermove', event => {
+
+on(window, 'pointermove', event => {
   if (event.pointerType !== 'mouse' || !finePointer.matches || reducedMotion.matches) return;
   pointer.x = event.clientX; pointer.y = event.clientY; pointer.active = true;
 }, { passive: true });
-document.documentElement.addEventListener('pointerleave', () => pointer.active = false);
-addEventListener('blur', () => pointer.active = false);
-document.addEventListener('visibilitychange', () => { if (document.hidden) stopField(); else resumeField(); });
-addEventListener('resize', () => {
-  clearTimeout(resizeTimer);
-  scheduleScroll();
+on(document.documentElement, 'pointerleave', () => pointer.active = false);
+on(window, 'blur', () => pointer.active = false);
+on(document, 'visibilitychange', () => { if (document.hidden) stopField(); else resumeField(); });
+on(window, 'resize', () => {
+  clearTimeout(resizeTimer); scheduleScroll();
   resizeTimer = setTimeout(() => { if (context) createField(); }, 120);
 }, { passive: true });
+function updatePointerPreference() { pointer.active = false; if (context) createField(); }
 reducedMotion.addEventListener('change', applyMotionPreference);
-finePointer.addEventListener('change', () => { pointer.active = false; if (context) createField(); });
-addEventListener('pagehide', stopField);
-addEventListener('pageshow', resumeField);
-prepareReveals();
+finePointer.addEventListener('change', updatePointerPreference);
+on(window, 'pagehide', stopField);
+on(window, 'pageshow', resumeField);
 if (context) createField();
 applyMotionPreference();
+return () => {
+  lifecycle.abort();
+  reducedMotion.removeEventListener('change', applyMotionPreference);
+  finePointer.removeEventListener('change', updatePointerPreference);
+  stopField();
+  cancelAnimationFrame(scrollFrame);
+  clearTimeout(resizeTimer);
+  resizeObserver.disconnect();
+  delete document.documentElement.dataset.motion;
+  portrait.style.removeProperty('--portrait-shift');
+  if (context) context.clearRect(0,0,width,height);
+};
+}

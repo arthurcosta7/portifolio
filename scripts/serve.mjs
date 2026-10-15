@@ -18,4 +18,4 @@ createServer(async (req, res) => {
     res.writeHead(200, { 'Content-Type': types[extname(target)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff' });
     res.end(req.method === 'HEAD' ? undefined : data);
   } catch { res.writeHead(404); res.end('Página não encontrada.'); }
-}).listen(port, '127.0.0.1', () => console.log(`Local: http://localhost:${port}`));
+}).listen(port, process.env.HOST || '0.0.0.0', () => console.log(`Local: http://localhost:${port}`));
