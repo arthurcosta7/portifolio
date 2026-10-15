@@ -1,6 +1,6 @@
 # Arthur Costa · Portfólio profissional
 
-Portfólio de **Arthur de Carvalho Costa**, estudante de **Engenharia de Software**, com foco em **Python, Java e JavaScript**. Desenvolvido a partir dos requisitos do Laboratório 01 de DIAW. A apresentação prioriza nome, foto, trajetória e projetos, com navegação lateral e leitura contínua.
+Portfólio de **Arthur de Carvalho Costa**, estudante de **Engenharia de Software**, com foco em **Python, Java e JavaScript**. Desenvolvido a partir dos requisitos do Laboratório 01 de DIAW. A apresentação prioriza nome, foto, trajetória e projetos, com navegação lateral, tema escuro e partículas interativas no fundo.
 
 ## Links úteis
 
@@ -28,13 +28,15 @@ Apresenta formação, interesses, projetos em ordem cronológica, trajetória ac
 - Integração configurável com WakaTime, com estado honesto quando desconectado.
 - Formulário de contato validado com envio ao FormSubmit, indicadores de carregamento, falha e confirmação do serviço.
 - Copiar e-mail, menu móvel, navegação por teclado e respeito a movimento reduzido.
+- Rede de partículas em Canvas com reação ao cursor, retorno suave e conexões por proximidade. Até 90 partículas, renderização limitada a 30 fps e pausa com aba oculta.
+- Entradas sequenciais de textos e imagens na rolagem, paralaxe discreta da foto no desktop e barra de progresso. Movimento reduzido desliga animações e mantém todo o conteúdo visível.
 
 ## Tecnologias e dependências
 
 | Camada | Tecnologia |
 | --- | --- |
 | Interface | HTML semântico, CSS responsivo, JavaScript ES Modules |
-| Fontes | Instrument Sans, Caveat e IBM Plex Mono, via Google Fonts |
+| Fontes | Instrument Sans e IBM Plex Mono, via Google Fonts; sem cursiva |
 | APIs públicas | GitHub REST API e WakaTime API |
 | Envio de e-mail | FormSubmit, backend externo |
 | Preview local | Node.js 22+ com módulos nativos `http`, `fs`, `path`, `url` |
@@ -107,6 +109,8 @@ dist/
   index.html             Estrutura e conteúdo inicial
   style.css              Design e responsividade
   app.js                 Traduções, filtros, integrações e formulário
+  motion.js              Partículas, entradas e progresso da rolagem
+  motion.css             Camada visual de animação
   config.js              Configuração pública
   favicon.svg            Marca do portfólio
   assets/                Imagens dos projetos
@@ -116,6 +120,7 @@ docs/
 scripts/
   serve.mjs              Preview local sem dependências
   verify.cjs             Verificações de interface com Playwright
+  verify-motion.cjs      Verificação de partículas e movimento reduzido
 package.json
 README.md
 ```
@@ -144,6 +149,8 @@ Verificação de sintaxe: `npm run check`.
 Os testes de interface em `scripts/verify.cjs` usam Playwright como ferramenta de desenvolvimento externa. Para executá-los, disponibilize o pacote e o Chromium no ambiente e rode o script enquanto o servidor local estiver ativo. O pacote não é necessário para executar ou hospedar o portfólio.
 
 Cobertura: alternância de idioma, caderno expansível, abas do editor por clique e teclado, exemplo de execução, filtros, navegação móvel, ausência de rolagem horizontal em sete larguras (320 a 1440 px), imagens, validação de formulário e respostas simuladas do serviço de contato. Entrega real de e-mail e dados WakaTime permanecem dependentes de configuração externa.
+
+`scripts/verify-motion.cjs` verifica pixels efetivamente desenhados no Canvas, iluminação em resposta ao cursor, entrada de projetos durante rolagem, barra de progresso, ausência de cursiva, tema escuro e pausa/retomada ao alterar a preferência de movimento reduzido.
 
 ## Pendências para a entrega acadêmica completa
 
