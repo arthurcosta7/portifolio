@@ -7,7 +7,7 @@
 .brand{font-family:var(--font)}
 .hero-portrait{border-radius:5px}
 .photo-mount{overflow:hidden;border:1px solid #344550;border-radius:5px}
-.photo-mount img{transform:translateY(var(--portrait-shift,0px)) scale(1.075);will-change:transform}
+.photo-mount img{height:auto;aspect-ratio:1;object-position:center;transform:translateY(var(--portrait-shift,0px)) scale(1.075);will-change:transform}
 .hero-portrait figcaption{padding-left:0;letter-spacing:0;white-space:normal}
 .hero-portrait figcaption>span{transform:none}
 .hero-socials a,.sidebar-socials a{transition:color .25s,transform .25s}

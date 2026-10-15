@@ -134,7 +134,7 @@ README.md
 - BH Eats: imagem original do repositório `public/images/printSite1.png`.
 - Catálogo de Filmes: captura da interface real do repositório, carregada com dados demonstrativos para a apresentação. A versão pública do projeto requer uma chave TMDB própria. A legenda identifica os dados demonstrativos.
 - FinanceTarget: diagrama visual da stack verificada no README, identificado como visão técnica. Uma screenshot do aplicativo em execução ainda precisa substituir essa visão para atender integralmente ao item de demonstração por projeto do laboratório.
-- Foto: avatar público do GitHub de Arthur.
+- Foto: imagem enviada por Arthur, armazenada localmente em `dist/assets/arthur-costa.png`.
 
 ## Deploy
 
