@@ -6,6 +6,7 @@ Portfólio de **Arthur de Carvalho Costa**, estudante de **Engenharia de Softwar
 
 - [Site na nuvem — acesso privado do proprietário](https://arthur-costa-portfolio.arquitetura542925.chatgpt.site)
 - [GitHub](https://github.com/arthurcosta7)
+- [Código do portfólio](https://github.com/arthurcosta7/portifolio)
 - [LinkedIn](https://www.linkedin.com/in/arthur-costa-dev/)
 - Contato: arthurcosta1973@gmail.com
 - [Direção visual e wireframe](docs/design.md)
@@ -159,7 +160,7 @@ Cobertura: alternância de idioma, caderno expansível, abas do editor por cliqu
 - Confirmar instituição e período do curso se desejar detalhá-los na trajetória.
 - Incluir uma captura real do FinanceTarget em execução.
 - Criar o protótipo no Figma, se exigido na Sprint 01. O wireframe textual não é apresentado como um arquivo Figma.
-- Enviar o código ao repositório GitHub de Arthur e disponibilizar uma hospedagem de acesso público para avaliação. O trabalho local e a hospedagem privada não são apresentados como código já publicado no GitHub.
+- Disponibilizar uma hospedagem de acesso público para avaliação. A versão na hospedagem Sites tem acesso privado do proprietário; o código está no repositório GitHub indicado acima.
 
 ## Autor e referências
 
