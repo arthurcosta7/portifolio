@@ -4,15 +4,14 @@ import { ExternalLink, Reveal, SectionHeading, TextLink, profileLinks } from './
 
 const orderedProjects = [...projects].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-function ArchitecturePreview({ t }) {
+function ArchitecturePreview({ project, t }) {
   return <>
-    <div className="preview-window-top"><span><i /><i /><i /></span><span>financetarget / architecture</span></div>
+    <div className="preview-window-top"><span><i /><i /><i /></span><span>{project.repo} / architecture</span></div>
     <div className="architecture-diagram">
-      <div className="architecture-node"><span>01 / interface</span><strong>Next.js + React</strong><small>TypeScript</small></div>
-      <span className="architecture-connector">↓ <span>REST API</span></span>
-      <div className="architecture-node"><span>02 / back-end</span><strong>Java + Spring Boot</strong></div>
-      <span className="architecture-connector">↓ <span>persistence</span></span>
-      <div className="architecture-node"><span>03 / database</span><strong>PostgreSQL</strong><small>Flyway</small></div>
+      {project.architecture.map(([title, detail], index) => <div key={title}>
+        {index > 0 ? <span className="architecture-connector" aria-hidden="true">↓</span> : null}
+        <div className="architecture-node"><span>0{index + 1}</span><strong>{title}</strong><small>{detail}</small></div>
+      </div>)}
     </div>
     <span className="project-preview-note">{t('technicalPreview')}</span>
   </>;
@@ -42,7 +41,7 @@ function Project({ project, t, language, featured }) {
       {project.image ? <>
         <img src={`${import.meta.env.BASE_URL}${project.image.replace(/^\//,'')}`} alt={`${language === 'pt' ? 'Captura de tela do projeto' : 'Project screenshot'} ${name}`} width="900" height="530" loading="lazy" />
         {project.demo ? <span className="demo-caption">{language === 'pt' ? 'Interface real · dados demonstrativos' : 'Real interface · sample data'}</span> : null}
-      </> : <ArchitecturePreview t={t} />}
+      </> : <ArchitecturePreview project={project} t={t} />}
     </ExternalLink>
   </Reveal>;
 }
@@ -57,7 +56,7 @@ export default function Projects({ t, language }) {
       <TextLink href={`${profileLinks.github}?tab=repositories`} external>{t('allRepos')}</TextLink>
     </SectionHeading>
     <div className="project-filters" role="group" aria-label={t('projectFilters')}>
-      {[['all',t('all')],['javascript','JavaScript'],['java','Java']].map(([value,label]) => <button
+      {[['all',t('all')],['javascript','JavaScript'],['java','Java'],['python','Python']].map(([value,label]) => <button
         key={value}
         className={filter === value ? 'selected' : undefined}
         data-filter={value}

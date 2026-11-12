@@ -221,44 +221,42 @@ export const snippets = {
 
 export const projects = [
   {
-    "name": "BH Eats",
-    "repo": "BH-Eats",
-    "date": "2026-04-04T14:12:28Z",
+    "name": "Rota · Aluguel de Carros",
+    "nameEn": "Rota · Car Rental",
+    "repo": "AluguelDeCarros",
+    "image": "/assets/rota.webp",
+    "date": "2026-11-05T00:31:11Z",
     "tags": [
-      "JavaScript",
-      "HTML",
-      "CSS",
-      "REST API"
+      "Java",
+      "Spring Boot",
+      "React",
+      "PostgreSQL"
     ],
     "filters": [
+      "java",
       "javascript"
     ],
-    "image": "/assets/bh-eats.webp",
-    "pt": "Um catálogo para explorar restaurantes de Belo Horizonte, com categorias, filtros e ranking a partir de uma API REST simulada.",
-    "en": "A catalog for exploring restaurants in Belo Horizonte, featuring categories, filters and rankings using a simulated REST API."
-  },
-  {
-    "name": "Catálogo de Filmes",
-    "nameEn": "Movie Catalog",
-    "repo": "Catalogo-Filmes",
-    "date": "2026-07-07T02:50:10Z",
-    "tags": [
-      "JavaScript",
-      "CSS",
-      "TMDB API",
-      "localStorage"
-    ],
-    "filters": [
-      "javascript"
-    ],
-    "image": "/assets/catalogo-filmes.webp",
-    "demo": true,
-    "pt": "Filmes, detalhes e uma lista de favoritos. Uma aplicação web que consome a API do TMDB e salva suas escolhas no navegador.",
-    "en": "Movies, details and a favorites list. A web application using the TMDB API that saves your picks in the browser."
+    "pt": "Protótipo acadêmico de locação de veículos, com gestão de frota, pedidos, análise de crédito e contratos para clientes, empresas e bancos.",
+    "en": "An academic car rental prototype with fleet management, rental requests, credit review and contracts for customers, companies and banks.",
+    "architecture": [
+      [
+        "React + Vite",
+        "JavaScript"
+      ],
+      [
+        "Java + Spring Boot",
+        "Spring Security · REST API"
+      ],
+      [
+        "PostgreSQL",
+        "JPA · Flyway"
+      ]
+    ]
   },
   {
     "name": "FinanceTarget",
     "repo": "financetarget",
+    "image": "/assets/financetarget.webp",
     "date": "2026-08-27T19:59:51Z",
     "tags": [
       "Java",
@@ -279,6 +277,84 @@ export const projects = [
       "Java + Spring Boot",
       "            ↓ persistence",
       "PostgreSQL + Flyway"
+    ],
+    "architecture": [
+      [
+        "Next.js + React",
+        "TypeScript"
+      ],
+      [
+        "Java + Spring Boot",
+        "REST API"
+      ],
+      [
+        "PostgreSQL",
+        "Flyway"
+      ]
+    ]
+  },
+  {
+    "name": "Portfólio",
+    "nameEn": "Portfolio",
+    "repo": "portifolio",
+    "image": "/assets/portifolio.webp",
+    "date": "2026-10-14T14:46:13Z",
+    "tags": [
+      "JavaScript",
+      "React",
+      "Vite",
+      "CSS"
+    ],
+    "filters": [
+      "javascript"
+    ],
+    "pt": "Meu espaço na web para apresentar projetos, trajetória e atividade no GitHub. Interface bilíngue em React, com filtros por tecnologia.",
+    "en": "My space on the web for sharing projects, my journey and GitHub activity. A bilingual React interface with technology filters.",
+    "architecture": [
+      [
+        "React",
+        "Português · English"
+      ],
+      [
+        "JavaScript + CSS",
+        "Vite"
+      ],
+      [
+        "GitHub API",
+        "Atividade pública / Public activity"
+      ]
+    ]
+  },
+  {
+    "name": "Redator",
+    "repo": "redator",
+    "image": "/assets/redator.webp",
+    "date": "2026-05-26T01:02:10Z",
+    "tags": [
+      "Python",
+      "FastAPI",
+      "Next.js",
+      "PostgreSQL"
+    ],
+    "filters": [
+      "python",
+      "javascript"
+    ],
+    "pt": "Plataforma de correção de redações com IA para alunos e professores, com avaliação ENEM, leitura de imagens, turmas e acompanhamento de desempenho.",
+    "en": "An AI essay feedback platform for students and teachers, with ENEM assessment, image text recognition, classes and performance tracking.",
+    "architecture": [
+      [
+        "Next.js + React",
+        "TypeScript"
+      ],
+      [
+        "Python + FastAPI",
+        "OCR · IA / AI"
+      ],
+      [
+        "PostgreSQL + Redis",
+        "SQLAlchemy · ARQ"
+      ]
     ]
   }
 ];
