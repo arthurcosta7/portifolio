@@ -1,5 +1,15 @@
 export const strings = {
   "pt": {
+    "heroEyebrow": "Portfólio pessoal · Software",
+    "viewProjects": "Explorar projetos",
+    "letsTalk": "Vamos conversar",
+    "featuredProject": "Projeto mais recente",
+    "selectedWork": "Trabalhos selecionados",
+    "learningTitle": "Aprender construindo.",
+    "learningDescription": "Da lógica à aplicação: meus estudos ganham forma em projetos de back-end, interfaces web e integrações com APIs.",
+    "learningLink": "Conheça minha trajetória",
+    "projectCount": "projetos nesta seleção",
+    "projectCountSingle": "projeto nesta seleção",
     "loadingWaka": "Buscando estatísticas públicas…",
     "navAbout": "Sobre mim",
     "navProjects": "Projetos",
@@ -70,14 +80,24 @@ export const strings = {
     "sidebarNote": "Meu espaço na web.",
     "heroRole": "Desenvolvedor em formação.",
     "workingWith": "Estudando e desenvolvendo com",
-    "projectsIntro": "Uma seleção do que tenho desenvolvido, do primeiro ao mais recente.",
+    "projectsIntro": "Ideias colocadas em prática. Explore os projetos, as tecnologias e o código por trás de cada um.",
     "toolsLabel": "No dia a dia",
     "codeSummary": "Um mesmo exemplo, três linguagens",
     "codeDescription": "Um exemplo demonstrativo do meu perfil em Python, Java e JavaScript. Escolha uma aba para comparar.",
-    "activityIntro": "Repositórios e tempo dedicado ao código.",
+    "activityIntro": "Código, estudos e os próximos passos da minha formação.",
     "projectRepository": "Repositório"
   },
   "en": {
+    "heroEyebrow": "Personal portfolio · Software",
+    "viewProjects": "Explore projects",
+    "letsTalk": "Let’s talk",
+    "featuredProject": "Latest project",
+    "selectedWork": "Selected work",
+    "learningTitle": "Learning by building.",
+    "learningDescription": "From logic to applications: putting my studies into practice with back-end projects, web interfaces and API integrations.",
+    "learningLink": "Explore my journey",
+    "projectCount": "projects in this selection",
+    "projectCountSingle": "project in this selection",
     "loadingWaka": "Loading public statistics…",
     "navAbout": "About me",
     "navProjects": "Projects",
@@ -148,11 +168,11 @@ export const strings = {
     "sidebarNote": "My space on the web.",
     "heroRole": "An aspiring software developer.",
     "workingWith": "Studying and building with",
-    "projectsIntro": "A selection of my work, from the first project to the most recent.",
+    "projectsIntro": "Ideas put into practice. Explore the projects, the technologies and the code behind each one.",
     "toolsLabel": "Everyday tools",
     "codeSummary": "One example, three languages",
     "codeDescription": "A visual example of my profile in Python, Java and JavaScript. Choose a tab to compare.",
-    "activityIntro": "Repositories and time spent coding.",
+    "activityIntro": "Code, studies and the next steps in my journey.",
     "projectRepository": "Repository"
   }
 };
@@ -213,7 +233,7 @@ export const projects = [
     "filters": [
       "javascript"
     ],
-    "image": "/assets/bh-eats.png",
+    "image": "/assets/bh-eats.webp",
     "pt": "Um catálogo para explorar restaurantes de Belo Horizonte, com categorias, filtros e ranking a partir de uma API REST simulada.",
     "en": "A catalog for exploring restaurants in Belo Horizonte, featuring categories, filters and rankings using a simulated REST API."
   },
@@ -231,7 +251,7 @@ export const projects = [
     "filters": [
       "javascript"
     ],
-    "image": "/assets/catalogo-filmes.png",
+    "image": "/assets/catalogo-filmes.webp",
     "demo": true,
     "pt": "Filmes, detalhes e uma lista de favoritos. Uma aplicação web que consome a API do TMDB e salva suas escolhas no navegador.",
     "en": "Movies, details and a favorites list. A web application using the TMDB API that saves your picks in the browser."

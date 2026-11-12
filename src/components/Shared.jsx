@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
 import { config } from '../config.js';
 
 export const profileLinks = {
@@ -30,20 +29,9 @@ export function TextLink({ children, href, external = false, ...props }) {
   return <Link href={href} className="text-link" {...props}><span>{children}</span><span aria-hidden="true">↗</span></Link>;
 }
 
-// React owns reveal state; the browser observer only reports visibility.
+// The scroll controller observes these panels, including projects added by filters.
 export function Reveal({ as: Tag = 'div', className = '', delay = 0, children, style, ...props }) {
-  const element = useRef(null);
-  const [revealed, setRevealed] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
-  useEffect(() => {
-    if (revealed) return;
-    if (element.current.getBoundingClientRect().bottom < 0) { setRevealed(true); return; }
-    const observer = new IntersectionObserver(entries => {
-      if (entries.some(entry => entry.isIntersecting)) { setRevealed(true); observer.disconnect(); }
-    }, { threshold: .08, rootMargin: '0px 0px -35px 0px' });
-    observer.observe(element.current);
-    return () => observer.disconnect();
-  }, [revealed]);
-  return <Tag {...props} ref={element} data-reveal="" className={`${className}${revealed ? ' is-revealed' : ''}`} style={{ ...style, '--reveal-delay': `${delay}ms` }} onFocusCapture={() => setRevealed(true)}>{children}</Tag>;
+  return <Tag {...props} data-scroll-reveal data-scroll-delay={delay} className={className} style={style}>{children}</Tag>;
 }
 
 export function SectionHeading({ title, description, children, className = '' }) {
